@@ -40,6 +40,12 @@ Satoshi_Escrow/
 - Fetches real STX balance from Stacks Testnet API
 - Handles all contract interactions and UI updates
 
+**
+##Demo Link
+**
+https://youtu.be/JHnkOVt41rs
+
+
 ## Getting Started
 
 ### Prerequisites
@@ -70,4 +76,5 @@ Visit [http://localhost:3000](http://localhost:3000) in your browser.
 MIT
 
 ---
-**Author:** Rajbhandari107
+**Author:** Rajbhandari107 TEAM007
+
