@@ -1,0 +1,15 @@
+---
+id: 0
+name: Satoshi Escrow Deployment
+network: testnet
+stacks-node: "https://api.testnet.hiro.so"
+bitcoin-node: "bitcoind.testnet.stacks.co:18332"
+plan:
+  batches:
+    - id: 0
+      transactions:
+        - contract-publish:
+            expected-sender: ST2ZBDY1DAG2KMW2258F85RVRHCJ914DAFQA7HWC1
+            contract-name: satoshi-escrow
+            cost: 46180
+            path: contracts/satoshi-escrow.clar

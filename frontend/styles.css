@@ -1,0 +1,364 @@
+/* Custom CSS for Satoshi Escrow */
+
+/* Base styles */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+    background: linear-gradient(135deg, #1e1b4b 0%, #312e81 25%, #1f2937 75%, #111827 100%);
+    background-attachment: fixed;
+    min-height: 100vh;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+@keyframes glow {
+    0%, 100% {
+        box-shadow: 0 0 20px rgba(139, 92, 246, 0.3);
+    }
+    50% {
+        box-shadow: 0 0 30px rgba(139, 92, 246, 0.6);
+    }
+}
+
+/* Component animations */
+.fade-in-up {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.slide-in-right {
+    animation: slideInRight 0.6s ease-out;
+}
+
+.pulse-glow {
+    animation: glow 2s ease-in-out infinite;
+}
+
+/* Logo styles */
+.logo-container svg {
+    filter: drop-shadow(0 0 10px rgba(139, 92, 246, 0.5));
+}
+
+/* Card hover effects */
+.card-hover {
+    transition: all 0.3s ease;
+}
+
+.card-hover:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    border-color: #8b5cf6;
+}
+
+/* Form styles */
+.form-group input:focus {
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+}
+
+.form-group .error-message.show {
+    display: block;
+}
+
+/* Button styles */
+.btn-primary {
+    background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);
+    border: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+.btn-primary:hover::before {
+    left: 100%;
+}
+
+.btn-secondary {
+    background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+}
+
+.btn-success {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+}
+
+.btn-danger {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+}
+
+.btn-warning {
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+}
+
+/* Escrow card styles */
+.escrow-card {
+    background: linear-gradient(145deg, #374151 0%, #1f2937 100%);
+    border: 1px solid #4b5563;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.escrow-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #8b5cf6, #ec4899, #06b6d4);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.escrow-card:hover::before {
+    opacity: 1;
+}
+
+.escrow-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    border-color: #6b7280;
+}
+
+.escrow-card .role-badge {
+    position: relative;
+    z-index: 1;
+}
+
+.escrow-card .role-badge.buyer {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+}
+
+.escrow-card .role-badge.seller {
+    background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+}
+
+.escrow-card .role-badge.arbiter {
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+}
+
+.escrow-card .role-badge.observer {
+    background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
+}
+
+/* Status badges */
+.status-active {
+    background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+    color: #1f2937;
+    font-weight: 600;
+}
+
+.status-released {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+}
+
+.status-refunded {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    color: white;
+}
+
+/* Toast notifications */
+.toast {
+    background: rgba(31, 41, 55, 0.95);
+    backdrop-filter: blur(10px);
+    border: 1px solid #4b5563;
+    border-radius: 0.75rem;
+    padding: 1rem;
+    margin-bottom: 0.5rem;
+    max-width: 400px;
+    animation: slideInRight 0.3s ease-out;
+    position: relative;
+    overflow: hidden;
+}
+
+.toast::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--toast-color);
+}
+
+.toast.success {
+    --toast-color: #10b981;
+    border-color: #10b981;
+}
+
+.toast.error {
+    --toast-color: #ef4444;
+    border-color: #ef4444;
+}
+
+.toast.info {
+    --toast-color: #3b82f6;
+    border-color: #3b82f6;
+}
+
+.toast.warning {
+    --toast-color: #f59e0b;
+    border-color: #f59e0b;
+}
+
+/* Loading states */
+.loading-skeleton {
+    background: linear-gradient(90deg, #374151 25%, #4b5563 50%, #374151 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -200% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+/* Modal styles */
+#transaction-modal .bg-gray-800 {
+    background: linear-gradient(145deg, #374151 0%, #1f2937 100%);
+    border: 1px solid #4b5563;
+    backdrop-filter: blur(10px);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+    
+    #wallet-info {
+        display: none !important;
+    }
+    
+    .grid {
+        gap: 1rem;
+    }
+    
+    .escrow-card {
+        margin-bottom: 1rem;
+    }
+}
+
+/* Utility classes */
+.text-gradient {
+    background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.border-gradient {
+    border: 1px solid transparent;
+    background: linear-gradient(145deg, #374151, #1f2937) padding-box,
+                linear-gradient(135deg, #8b5cf6, #ec4899) border-box;
+}
+
+.glass-effect {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Address display */
+.address-display {
+    font-family: 'Courier New', monospace;
+    font-size: 0.875rem;
+    color: #93c5fd;
+}
+
+/* Amount display */
+.amount-display {
+    font-weight: 600;
+    font-size: 1.125rem;
+    color: #10b981;
+}
+
+/* Action button group */
+.action-buttons {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.action-buttons button {
+    flex: 1;
+    min-width: 80px;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.action-buttons button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Statistics cards */
+.stat-card {
+    background: linear-gradient(145deg, #374151 0%, #1f2937 100%);
+    transition: transform 0.2s ease;
+}
+
+.stat-card:hover {
+    transform: scale(1.02);
+}
+
+/* Input validation */
+.form-group input.invalid {
+    border-color: #ef4444;
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+.form-group input.valid {
+    border-color: #10b981;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+}

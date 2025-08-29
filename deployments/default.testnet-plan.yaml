@@ -1,0 +1,18 @@
+---
+id: 0
+name: Testnet deployment
+network: testnet
+stacks-node: "https://api.testnet.hiro.so"
+bitcoin-node: "http://blockstack:blockstacksystem@bitcoind.testnet.stacks.co:18332"
+plan:
+  batches:
+    - id: 0
+      transactions:
+        - contract-publish:
+            contract-name: satoshi-escrow
+            expected-sender: ST2ZBDY1DAG2KMW2258F85RVRHCJ914DAFQA7HWC1
+            cost: 27020
+            path: "contracts\\satoshi-escrow.clar"
+            anchor-block-only: true
+            clarity-version: 3
+      epoch: "3.2"

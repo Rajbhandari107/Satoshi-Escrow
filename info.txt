@@ -1,0 +1,37 @@
+Satoshi Escrow: Project Overview
+This document outlines the complete plan for Satoshi Escrow, a decentralized application built for the Stacks hackathon.
+
+Project Pitch
+The Problem: The lack of trust in online freelance work. Freelancers fear not getting paid, while clients worry about paying for work that is never delivered.
+
+The Solution: We are building a trustless, Bitcoin-secured escrow service. Satoshi Escrow is a smart contract that acts as a secure "safe box" for sBTC, holding funds until both the client and freelancer fulfill their obligations. For disputes, a pre-agreed arbiter can step in to resolve the issue.
+
+Why We Will Win: Our project solves a universal, real-world problem with a simple, powerful, and verifiable solution. We are demonstrating a live, on-chain application that leverages the unique security of Bitcoin through the Stacks blockchain.
+
+Tech Stack
+Our technology choices are focused on simplicity, security, and a winning live demo.
+
+Smart Contract Language: We are using Clarity, a secure and verifiable smart contract language for Stacks.
+
+Blockchain: Our project is built on the Stacks blockchain, the only layer for Bitcoin smart contracts.
+
+Currency: We will use sBTC (Bitcoin on Stacks) as the payment currency, directly showcasing the value of a decentralized, Bitcoin-secured application.
+
+Frontend: The entire user interface will be built using just HTML, CSS, and JavaScript for speed and reliability. We will use Tailwind CSS for clean, responsive styling.
+
+Wallet Integration: We will connect the front end to the Stacks network using the Stacks.js library, which ensures seamless interaction with the Leather Wallet.
+
+Website Components
+The website is designed with a simple and intuitive user flow, broken down into these core components:
+
+Navigation Bar: A clean header with the project name and a prominent "Connect Wallet" button.
+
+Wallet Status Display: A visible confirmation that the user's wallet is connected, showing their public address.
+
+Client Interface: A simple form with input fields for the freelancer's address, the arbiter's address, and the sBTC payment amount, along with a "Create Escrow" button.
+
+Deal Status Dashboard: A dynamic section that displays the details of any active escrow deal for the connected user, including the amount, parties, and approval status.
+
+Action Buttons: Context-sensitive buttons that appear based on the deal's status and the user's role. These include "Approve Release," "Cancel Escrow," "Release," "Refund," and "Refresh Status."
+
+Feedback Modals: Simple, non-intrusive pop-ups for showing transaction loading states, success messages, or error notifications without disrupting the user experience.

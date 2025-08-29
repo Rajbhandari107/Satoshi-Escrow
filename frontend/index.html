@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Satoshi Escrow - Secure STX Transactions</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gray-900 text-white min-h-screen">
+    <!-- Header -->
+    <header class="bg-gray-800 shadow-lg">
+        <nav class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                    <div class="logo-container">
+                        <svg class="w-10 h-10 mr-3" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="url(#gradient)" stroke-width="2" stroke-linejoin="round"/>
+                            <path d="M2 17L12 22L22 17" stroke="url(#gradient)" stroke-width="2" stroke-linejoin="round"/>
+                            <path d="M2 12L12 17L22 12" stroke="url(#gradient)" stroke-width="2" stroke-linejoin="round"/>
+                            <defs>
+                                <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#8B5CF6"/>
+                                    <stop offset="100%" style="stop-color:#EC4899"/>
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                    </div>
+                    <h1 class="text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+                        Satoshi Escrow
+                    </h1>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <div id="wallet-info" class="hidden">
+                        <span class="text-sm text-gray-400">Balance:</span>
+                        <span id="stx-balance" class="text-green-400 font-semibold">-- STX</span>
+                        <span class="text-sm text-gray-400 ml-4">Address:</span>
+                        <span id="user-address" class="text-blue-400 font-mono text-sm"></span>
+                    </div>
+                    <button id="connect-wallet-btn" class="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 px-6 py-2 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105">
+                        Connect Leather Wallet
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-6 py-8">
+        <!-- Hero Section -->
+        <section class="text-center mb-12">
+            <h2 class="text-4xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+                Secure STX Escrow Service
+            </h2>
+            <p class="text-xl text-gray-400 max-w-2xl mx-auto">
+                Create trustless escrow transactions on Stacks blockchain with built-in arbitration
+            </p>
+        </section>
+
+        <!-- Dashboard Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+            <!-- Create Escrow Card -->
+            <div class="lg:col-span-1">
+                <div class="bg-gray-800 rounded-xl p-6 shadow-xl border border-gray-700 hover:border-purple-500 transition-all duration-300">
+                    <h3 class="text-2xl font-bold mb-6 flex items-center">
+                        <i class="fas fa-plus-circle text-purple-400 mr-3"></i>
+                        Create Escrow
+                    </h3>
+                    
+                    <form id="escrow-form" class="space-y-4">
+                        <div class="form-group">
+                            <label for="seller-address" class="block text-sm font-medium text-gray-300 mb-2">
+                                Seller Address <span class="text-red-400">*</span>
+                            </label>
+                            <input type="text" id="seller-address" name="seller-address" required
+                                class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-white placeholder-gray-400"
+                                placeholder="SP1ABC...">
+                            <span class="error-message text-red-400 text-sm hidden"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="arbiter-address" class="block text-sm font-medium text-gray-300 mb-2">
+                                Arbiter Address <span class="text-red-400">*</span>
+                            </label>
+                            <input type="text" id="arbiter-address" name="arbiter-address" required
+                                class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-white placeholder-gray-400"
+                                placeholder="SP2DEF...">
+                            <span class="error-message text-red-400 text-sm hidden"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="escrow-amount" class="block text-sm font-medium text-gray-300 mb-2">
+                                Amount (STX) <span class="text-red-400">*</span>
+                            </label>
+                            <div class="relative">
+                                <input type="number" id="escrow-amount" name="escrow-amount" required min="0.000001" step="0.000001"
+                                    class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-white placeholder-gray-400"
+                                    placeholder="0.000000">
+                                <span class="absolute right-3 top-3 text-gray-400 text-sm">STX</span>
+                            </div>
+                            <span class="error-message text-red-400 text-sm hidden"></span>
+                        </div>
+
+                        <button type="submit" id="create-escrow-btn" disabled
+                            class="w-full bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 disabled:from-gray-600 disabled:to-gray-600 disabled:cursor-not-allowed px-6 py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 disabled:hover:scale-100">
+                            <i class="fas fa-lock mr-2"></i>
+                            Create Escrow Deal
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Escrow List -->
+            <div class="lg:col-span-2">
+                <div class="bg-gray-800 rounded-xl p-6 shadow-xl border border-gray-700">
+                    <div class="flex items-center justify-between mb-6">
+                        <h3 class="text-2xl font-bold flex items-center">
+                            <i class="fas fa-list-alt text-blue-400 mr-3"></i>
+                            Active Escrows
+                        </h3>
+                        <div class="flex space-x-2">
+                            <button id="refresh-escrows" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors">
+                                <i class="fas fa-sync-alt mr-2"></i>Refresh
+                            </button>
+                            <select id="filter-role" class="px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white">
+                                <option value="all">All Roles</option>
+                                <option value="buyer">As Buyer</option>
+                                <option value="seller">As Seller</option>
+                                <option value="arbiter">As Arbiter</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div id="escrows-container">
+                        <div id="escrows-loading" class="text-center py-12">
+                            <div class="animate-spin w-12 h-12 border-4 border-purple-400 border-t-transparent rounded-full mx-auto mb-4"></div>
+                            <p class="text-gray-400">Loading escrows...</p>
+                        </div>
+                        
+                        <div id="escrows-empty" class="text-center py-12 hidden">
+                            <i class="fas fa-inbox text-6xl text-gray-600 mb-4"></i>
+                            <h4 class="text-xl font-semibold text-gray-400 mb-2">No Escrows Found</h4>
+                            <p class="text-gray-500">Connect your wallet and create your first escrow deal</p>
+                        </div>
+
+                        <div id="escrows-list" class="space-y-4 hidden"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Statistics -->
+        <section class="grid grid-cols-1 md:grid-cols-4 gap-6">
+            <div class="bg-gray-800 rounded-xl p-6 text-center border border-gray-700">
+                <i class="fas fa-handshake text-3xl text-green-400 mb-3"></i>
+                <h4 class="text-2xl font-bold" id="total-escrows">--</h4>
+                <p class="text-gray-400">Total Escrows</p>
+            </div>
+            <div class="bg-gray-800 rounded-xl p-6 text-center border border-gray-700">
+                <i class="fas fa-coins text-3xl text-yellow-400 mb-3"></i>
+                <h4 class="text-2xl font-bold" id="total-volume">-- STX</h4>
+                <p class="text-gray-400">Total Volume</p>
+            </div>
+            <div class="bg-gray-800 rounded-xl p-6 text-center border border-gray-700">
+                <i class="fas fa-check-circle text-3xl text-blue-400 mb-3"></i>
+                <h4 class="text-2xl font-bold" id="completed-escrows">--</h4>
+                <p class="text-gray-400">Completed</p>
+            </div>
+            <div class="bg-gray-800 rounded-xl p-6 text-center border border-gray-700">
+                <i class="fas fa-clock text-3xl text-purple-400 mb-3"></i>
+                <h4 class="text-2xl font-bold" id="pending-escrows">--</h4>
+                <p class="text-gray-400">Pending</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modals -->
+    <!-- Transaction Modal -->
+    <div id="transaction-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-gray-800 rounded-xl p-8 max-w-md w-full mx-4 border border-gray-700">
+            <div class="text-center">
+                <div id="tx-loading" class="hidden">
+                    <div class="animate-spin w-16 h-16 border-4 border-purple-400 border-t-transparent rounded-full mx-auto mb-4"></div>
+                    <h3 class="text-xl font-bold mb-2">Processing Transaction</h3>
+                    <p class="text-gray-400">Please confirm in your Leather wallet...</p>
+                </div>
+                
+                <div id="tx-success" class="hidden">
+                    <i class="fas fa-check-circle text-green-400 text-5xl mb-4"></i>
+                    <h3 class="text-xl font-bold mb-2">Transaction Successful</h3>
+                    <p class="text-gray-400 mb-4">Your transaction has been submitted to the blockchain.</p>
+                    <p class="text-sm text-blue-400 break-all" id="tx-id"></p>
+                </div>
+                
+                <div id="tx-error" class="hidden">
+                    <i class="fas fa-exclamation-triangle text-red-400 text-5xl mb-4"></i>
+                    <h3 class="text-xl font-bold mb-2">Transaction Failed</h3>
+                    <p class="text-gray-400 mb-4" id="tx-error-message"></p>
+                </div>
+            </div>
+            
+            <div class="flex space-x-3 mt-6">
+                <button id="close-modal" class="flex-1 bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded-lg transition-colors">
+                    Close
+                </button>
+                <button id="view-transaction" class="flex-1 bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg transition-colors hidden">
+                    View on Explorer
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div id="toast-container" class="fixed top-4 right-4 space-y-2 z-50"></div>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+</body>
+</html>
